@@ -54,7 +54,7 @@ def post_detail(request, post_id):
     context = ''
     for post in posts:
         if post['id'] == post_id:
-            context = post
+            context = {'post': post}
     if context == '':
         raise IndexError('Page not found')
     template = 'blog/detail.html'
