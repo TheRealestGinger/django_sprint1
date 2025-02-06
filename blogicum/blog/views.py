@@ -43,25 +43,20 @@ posts = [
     },
 ]
 
+dict_of_posts = {post['id']: post for post in posts}
+
 
 def index(request):
-    template = 'blog/index.html'
-    context = {'posts': posts}
-    return render(request, template, context)
+    return render(request, 'blog/index.html', {'posts': posts})
 
 
 def post_detail(request, post_id):
-    context = ''
-    for post in posts:
-        if post['id'] == post_id:
-            context = {'post': post}
-    if context == '':
+    if post_id not in dict_of_posts:
         raise IndexError('Page not found')
-    template = 'blog/detail.html'
-    return render(request, template, context)
+    return render(request,
+                  'blog/detail.html',
+                  {'post': dict_of_posts.get(post_id)})
 
 
 def category_posts(request, category_slug):
-    template = 'blog/category.html'
-    context = {'category': category_slug}
-    return render(request, template, context)
+    return render(request, 'blog/category.html', {'category': category_slug})
